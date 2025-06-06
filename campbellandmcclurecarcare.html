@@ -3,7 +3,7 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campbell &amp; McClure. |</title>
+    <title>campbellandmcclure.co.uk |</title>
     <script>global = window; (()=>{var On=Object.create;var de=Object.defineProperty;var En=Object.getOwnPropertyDescriptor;var Tn=Object.getOwnPropertyNames;var Pn=Object.getPrototypeOf,Nn=Object.prototype.hasOwnProperty;var In=(e,t,r)=>t in e?de(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r;var g=(e,t)=>()=>(t||e((t={exports:{}}).exports,t),t.exports);var jn=(e,t,r,n)=>{if(t&&typeof t=="object"||typeof t=="function")for(let i of Tn(t))!Nn.call(e,i)&&i!==r&&de(e,i,{get:()=>t[i],enumerable:!(n=En(t,i))||n.enumerable});return e};var h=(e,t,r)=>(r=e!=null?On(Pn(e)):{},jn(t||!e||!e.__esModule?de(r,"default",{value:e,enumerable:!0}):r,e));var P=(e,t,r)=>(In(e,typeof t!="symbol"?t+"":t,r),r);var Ze=g((ye,Qe)=>{(function(e,t){"use strict";typeof define=="function"&&define.amd?define("stackframe",[],t):typeof ye=="object"?Qe.exports=t():e.StackFrame=t()})(ye,function(){"use strict";function e(u){return!isNaN(parseFloat(u))&&isFinite(u)}function t(u){return u.charAt(0).toUpperCase()+u.substring(1)}function r(u){return function(){return this[u]}}var n=["isConstructor","isEval","isNative","isToplevel"],i=["columnNumber","lineNumber"],o=["fileName","functionName","source"],a=["args"],f=["evalOrigin"],l=n.concat(i,o,a,f);function p(u){if(!!u)for(var y=0;y<l.length;y++)u[l[y]]!==void 0&&this["set"+t(l[y])](u[l[y]])}p.prototype={getArgs:function(){return this.args},setArgs:function(u){if(Object.prototype.toString.call(u)!=="[object Array]")throw new TypeError("Args must be an Array");this.args=u},getEvalOrigin:function(){return this.evalOrigin},setEvalOrigin:function(u){if(u instanceof p)this.evalOrigin=u;else if(u instanceof Object)this.evalOrigin=new p(u);else throw new TypeError("Eval Origin must be an Object or StackFrame")},toString:function(){var u=this.getFileName()||"",y=this.getLineNumber()||"",v=this.getColumnNumber()||"",O=this.getFunctionName()||"";return this.getIsEval()?u?"[eval] ("+u+":"+y+":"+v+")":"[eval]:"+y+":"+v:O?O+" ("+u+":"+y+":"+v+")":u+":"+y+":"+v}},p.fromString=function(y){var v=y.indexOf("("),O=y.lastIndexOf(")"),F=y.substring(0,v),bn=y.substring(v+1,O).split(","),ze=y.substring(O+1);if(ze.indexOf("@")===0)var fe=/@(.+?)(?::(\d+))?(?::(\d+))?$/.exec(ze,""),_n=fe[1],xn=fe[2],Sn=fe[3];return new p({functionName:F,args:bn||void 0,fileName:_n,lineNumber:xn||void 0,columnNumber:Sn||void 0})};for(var s=0;s<n.length;s++)p.prototype["get"+t(n[s])]=r(n[s]),p.prototype["set"+t(n[s])]=function(u){return function(y){this[u]=Boolean(y)}}(n[s]);for(var c=0;c<i.length;c++)p.prototype["get"+t(i[c])]=r(i[c]),p.prototype["set"+t(i[c])]=function(u){return function(y){if(!e(y))throw new TypeError(u+" must be a Number");this[u]=Number(y)}}(i[c]);for(var d=0;d<o.length;d++)p.prototype["get"+t(o[d])]=r(o[d]),p.prototype["set"+t(o[d])]=function(u){return function(y){this[u]=String(y)}}(o[d]);return p})});var tt=g((me,et)=>{(function(e,t){"use strict";typeof define=="function"&&define.amd?define("error-stack-parser",["stackframe"],t):typeof me=="object"?et.exports=t(Ze()):e.ErrorStackParser=t(e.StackFrame)})(me,function(t){"use strict";var r=/(^|@)\S+:\d+/,n=/^\s*at .*(\S+:\d+|\(native\))/m,i=/^(eval@)?(\[native code])?$/;return{parse:function(a){if(typeof a.stacktrace<"u"||typeof a["opera#sourceloc"]<"u")return this.parseOpera(a);if(a.stack&&a.stack.match(n))return this.parseV8OrIE(a);if(a.stack)return this.parseFFOrSafari(a);throw new Error("Cannot parse given Error object")},extractLocation:function(a){if(a.indexOf(":")===-1)return[a];var f=/(.+?)(?::(\d+))?(?::(\d+))?$/,l=f.exec(a.replace(/[()]/g,""));return[l[1],l[2]||void 0,l[3]||void 0]},parseV8OrIE:function(a){var f=a.stack.split(`
 `).filter(function(l){return!!l.match(n)},this);return f.map(function(l){l.indexOf("(eval ")>-1&&(l=l.replace(/eval code/g,"eval").replace(/(\(eval at [^()]*)|(,.*$)/g,""));var p=l.replace(/^\s+/,"").replace(/\(eval code/g,"(").replace(/^.*?\s+/,""),s=p.match(/ (\(.+\)$)/);p=s?p.replace(s[0],""):p;var c=this.extractLocation(s?s[1]:p),d=s&&p||void 0,u=["eval","<anonymous>"].indexOf(c[0])>-1?void 0:c[0];return new t({functionName:d,fileName:u,lineNumber:c[1],columnNumber:c[2],source:l})},this)},parseFFOrSafari:function(a){var f=a.stack.split(`
 `).filter(function(l){return!l.match(i)},this);return f.map(function(l){if(l.indexOf(" > eval")>-1&&(l=l.replace(/ line (\d+)(?: > eval line \d+)* > eval:\d+:\d+/g,":$1")),l.indexOf("@")===-1&&l.indexOf(":")===-1)return new t({functionName:l});var p=/((.*".+"[^@]*)?[^@]*)(?:@)/,s=l.match(p),c=s&&s[1]?s[1]:void 0,d=this.extractLocation(l.replace(p,""));return new t({functionName:c,fileName:d[0],lineNumber:d[1],columnNumber:d[2],source:l})},this)},parseOpera:function(a){return!a.stacktrace||a.message.indexOf(`
@@ -199,7 +199,7 @@ __injectStyle__(code);return code;`,`window[Symbol.for('__modules__')] = window[
                         <h3 class="text-xl font-bold mb-3">Exterior washing</h3>
                         <p class="text-gray-600 mb-4">Complete exterior wash,polish and restore your paint's shine and protect it from the elements.</p>
                         <div class="flex justify-between items-center">
-                            <p class="text-yellow-500 font-bold">From £49</p>
+                            <p class="text-yellow-500 font-bold">From Â£49</p>
                             <a href="https://preview-2411717.playcode.io/#contact" class="text-sm text-yellow-500 hover:text-yellow-600 font-medium">Book Now <i class="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
@@ -214,7 +214,7 @@ __injectStyle__(code);return code;`,`window[Symbol.for('__modules__')] = window[
                         <h3 class="text-xl font-bold mb-3">Interior Detailing</h3>
                         <p class="text-gray-600 mb-4">Deep cleaning of all surfaces, leather treatment, odor removal, and UV protection for a fresh and clean interior.</p>
                         <div class="flex justify-between items-center">
-                            <p class="text-yellow-500 font-bold">From £49</p>
+                            <p class="text-yellow-500 font-bold">From Â£49</p>
                             <a href="https://preview-2411717.playcode.io/#contact" class="text-sm text-yellow-500 hover:text-yellow-600 font-medium">Book Now <i class="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
@@ -229,7 +229,7 @@ __injectStyle__(code);return code;`,`window[Symbol.for('__modules__')] = window[
                         <h3 class="text-xl font-bold mb-3">Full car washing Package</h3>
                         <p class="text-gray-600 mb-4">Complete interior and exterior detailing with paint correction and ceramic coating for comprehensive protection.</p>
                         <div class="flex justify-between items-center">
-                            <p class="text-yellow-500 font-bold">From £99</p>
+                            <p class="text-yellow-500 font-bold">From Â£99</p>
                             <a href="https://preview-2411717.playcode.io/#contact" class="text-sm text-yellow-500 hover:text-yellow-600 font-medium">Book Now <i class="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
@@ -561,7 +561,7 @@ __injectStyle__(code);return code;`,`window[Symbol.for('__modules__')] = window[
                             <i class="fab fa-twitter"></i>
                         </a>
                     </div>
-                    <p class="text-gray-400 text-sm">© 2023 C&amp;M. All rights reserved.</p>
+                    <p class="text-gray-400 text-sm">Â© 2023 C&amp;M. All rights reserved.</p>
                 </div>
             </div>
         </div>
